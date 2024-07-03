@@ -12,12 +12,7 @@ class UI:
         
         self.DAO = DAOTax()
         self.calculator = calculator(self.DAO)
-        
         self.run()
-        # tax = self.calculator.CalculateTax(60000, "Ontario")
-
-        # print(tax)
-
 
     def run(self):
 
@@ -37,6 +32,7 @@ class UI:
                     if province.isnumeric() and int(province) == 1:
                         # taxFederal = self.calculator.CalculateTax(int(amount), "Federal")
                         taxFederal, taxProvince = self.calculator.CalculateTax(int(amount), "Québec")
+                        print(f"Le montant total à payer est: \nTax Federal -> {taxFederal}\nTax Province -> {taxProvince}")
                         break
                     elif province.isnumeric() and int(province) == 2:
                         # taxFederal = self.calculator.CalculateTax(int(amount), "Federal")
@@ -51,19 +47,21 @@ class UI:
                 choixProvince = input(" 1. Québec  \n 2. Ontario\n 3. Canada \n Entrer l'option 1, 2, ou 3: ")
                 if choixProvince.isnumeric() and int(choixProvince) == 1:
                         province = self.DAO.findAllBrackets("Québec")
-                        for bracket in province:
-                            print(f"La liste des tranches d'imp2
-                            osition de la province de Québec est: {bracket.getTaxBrackets()}")
+                        print("La liste des tranches d'imposition de la province de Québec est:")
+                        for i, bracket in enumerate(province):
+                            print(f"{i+1} Min: {bracket.getMin()} Max: {bracket.getMax()} Tax Rate: {bracket.getRate()}")
                         break
                 elif choixProvince.isnumeric() and int(choixProvince) == 2:
                         province = self.DAO.findAllBrackets("Ontario")
-                        for bracket in province:
-                            print(f"La liste des tranches d'imposition de la province d'Ontario est: {bracket.getTaxBrackets()}")
+                        print("La liste des tranches d'imposition de la province d'Ontario est:")
+                        for i, bracket in enumerate(province):
+                            print(f"{i+1} Min: {bracket.getMin()} Max: {bracket.getMax()} Tax Rate: {bracket.getRate()}")
                         break
                 elif choixProvince.isnumeric() and int(choixProvince) == 3:
                         province = self.DAO.findAllBrackets("Federal")
-                        for bracket in province:
-                            print(f"La liste des tranches d'imposition Federal est: {bracket.getTaxBrackets()}")
+                        print("La liste des tranches d'imposition Federal:")
+                        for i, bracket in enumerate(province):
+                            print(f"{i+1} Min: {bracket.getMin()} Max: {bracket.getMax()} Tax Rate: {bracket.getRate()}")
                         break                                    
                 else:
                         print("Veillez selectionner une option valide (1, 2 ou 3).")
